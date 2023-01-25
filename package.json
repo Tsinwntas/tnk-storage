@@ -2,24 +2,33 @@
   "name": "@tnk-modules/storage",
   "version": "1.0.0",
   "description": "Simplified storage with tables. Saves entities that are of type StorageEntity forcing a few rules to keep everything organized. The saved entity will be of type {databasekey : <key>, entity : <jsonified-entity>}",
-  "main": "index.js",
+  "main": "lib/index.js",
+  "types": "index.d.ts",
+  "files": [
+    "/lib"
+  ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Tsinwntas/MyModules.git"
+    "url": "git+https://github.com/Tsinwntas/tnk-storage.git"
   },
   "keywords": [
     "tsinik",
     "tnk",
     "simple",
-    "storage"
+    "storage",
+    "angular"
   ],
   "author": "Nicolas Tsinik Tsinontas",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/Tsinwntas/MyModules/issues"
+    "url": "https://github.com/Tsinwntas/tnk-storage/issues"
   },
-  "homepage": "https://github.com/Tsinwntas/MyModules#readme"
+  "homepage": "https://github.com/Tsinwntas/tnk-storage#readme",
+  "dependencies": {
+    "ngx-indexed-db": "^12.0.0",
+    "typescript": "^4.9.4"
+  }
 }

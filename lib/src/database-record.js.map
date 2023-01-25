@@ -1,0 +1,1 @@
+{"version":3,"file":"database-record.js","sourceRoot":"","sources":["../../src/database-record.ts"],"names":[],"mappings":"AACA,MAAM,OAAO,cAAc;IAI1B,YAAY,MAA0B;QACrC,IAAI,CAAC,WAAW,GAAG,MAAM,CAAC,WAAW,CAAC;QACtC,IAAI,CAAC,MAAM,GAAG,MAAM,CAAC,UAAU,EAAE,CAAC;IACnC,CAAC;CACD;AAED,MAAM,UAAU,IAAI,CAAC,MAA2B;IAC/C,OAAO,IAAI,cAAc,CAAC,MAAM,CAAC,CAAC;AACnC,CAAC"}
