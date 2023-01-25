@@ -1,7 +1,7 @@
-import { Observable } from 'rxjs';
 import { User } from './user';
 import { StorageEntity } from './data-factory';
 import { NgxIndexedDBService } from 'ngx-indexed-db';
+import { Observable } from 'rxjs';
 export declare class TnkStorage {
     private dbService;
     _user: User;
