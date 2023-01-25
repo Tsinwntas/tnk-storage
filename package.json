@@ -1,0 +1,25 @@
+{
+  "name": "@tnk-modules/storage",
+  "version": "1.0.0",
+  "description": "Simplified storage with tables. Saves entities that are of type StorageEntity forcing a few rules to keep everything organized. The saved entity will be of type {databasekey : <key>, entity : <jsonified-entity>}",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Tsinwntas/MyModules.git"
+  },
+  "keywords": [
+    "tsinik",
+    "tnk",
+    "simple",
+    "storage"
+  ],
+  "author": "Nicolas Tsinik Tsinontas",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Tsinwntas/MyModules/issues"
+  },
+  "homepage": "https://github.com/Tsinwntas/MyModules#readme"
+}
