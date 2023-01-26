@@ -1,37 +1,52 @@
 {
-  "name": "@tnk-modules/storage",
-  "version": "1.0.0",
-  "description": "Simplified storage with tables. Saves entities that are of type StorageEntity forcing a few rules to keep everything organized. The saved entity will be of type {databasekey : <key>, entity : <jsonified-entity>}",
-  "main": "lib/index.js",
-  "types": "index.d.ts",
-  "files": [
-    "/lib"
-  ],
+  "name": "tnk-storage",
+  "version": "0.0.0",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "postinstall": "ngcc"
+    "ng": "ng",
+    "start": "ng serve",
+    "build": "ng build",
+    "test": "ng test",
+    "lint": "ng lint",
+    "e2e": "ng e2e"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Tsinwntas/tnk-storage.git"
-  },
-  "keywords": [
-    "tsinik",
-    "tnk",
-    "simple",
-    "storage",
-    "angular"
-  ],
-  "author": "Nicolas Tsinik Tsinontas",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/Tsinwntas/tnk-storage/issues"
-  },
-  "homepage": "https://github.com/Tsinwntas/tnk-storage#readme",
+  "private": true,
   "dependencies": {
+    "@angular/animations": "~15.1.2",
+    "@angular/common": "~15.1.2",
+    "@angular/compiler": "~15.1.2",
+    "@angular/core": "^15.1.2",
+    "@angular/forms": "~15.1.2",
+    "@angular/platform-browser": "~15.1.2",
+    "@angular/platform-browser-dynamic": "~15.1.2",
+    "@angular/router": "~15.1.2",
     "ngx-indexed-db": "^12.0.0",
-    "rxjs": "^5.5.0",
-    "@angular/core": "^15.1.0",
+    "rxjs": "~7.8.0",
+    "tslib": "^2.4.1",
+    "zone.js": "~0.12.0"
+  },
+  "devDependencies": {
+    "@angular-devkit/build-angular": "~15.1.3",
+    "@angular-devkit/build-ng-packagr": "~0.1002.0",
+    "@angular/cli": "~15.1.3",
+    "@angular/compiler-cli": "~15.1.2",
+    "@angular/language-service": "~15.1.2",
+    "@types/jasmine": "~4.3.1",
+    "@types/jasminewd2": "~2.0.10",
+    "@types/node": "~18.11.18",
+    "ajv": "^7.2.4",
+    "codelyzer": "^6.0.2",
+    "jasmine-core": "~4.5.0",
+    "jasmine-spec-reporter": "~7.0.0",
+    "karma": "~6.4.1",
+    "karma-chrome-launcher": "~3.1.1",
+    "karma-coverage-istanbul-reporter": "~3.0.3",
+    "karma-jasmine": "~5.1.0",
+    "karma-jasmine-html-reporter": "^2.0.0",
+    "ng-packagr": "^15.1.1",
+    "protractor": "~5.4.0",
+    "ts-node": "~10.9.1",
+    "tsickle": "^0.46.3",
+    "tslint": "~5.20.1",
     "typescript": "^4.9.4"
   }
 }
