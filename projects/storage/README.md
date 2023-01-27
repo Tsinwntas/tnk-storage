@@ -9,7 +9,7 @@ It also creates by default a 'user' table, that holds the user for setting diffe
 ## Installation
 
 `$ npm install ngx-indexed-db`
-`$ @tnk-modules/storage`
+`$ npm install @tnk-modules/storage`
 
 ## Usage
 
