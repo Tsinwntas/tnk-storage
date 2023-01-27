@@ -1,4 +1,4 @@
-import { TnkStorage } from 'projects/storage/src/public-api';
+import { fixList, TnkStorage } from 'projects/storage/src/public-api';
 import { Component, inject, OnInit } from '@angular/core';
 import { StorageEntity } from 'projects/storage/src/public-api';
 
@@ -11,18 +11,47 @@ import { StorageEntity } from 'projects/storage/src/public-api';
 })
 export class AppComponent implements OnInit{
   title = 'tnk-storage';
+  typeAItems : Test[] = [];
+  typeBItems : Test[] = [];
+
+  itemName : string;
+  itemType : string;
+
 
   constructor(private tnk : TnkStorage){}
   
   ngOnInit(): void {
     debugger;
-    this.tnk.set(new Test());
-    this.tnk.getUser().then(u=>console.log(u));
+    this.getItems();
+  }
+
+  getItems() {
+    debugger;
+    this.tnk.getFiltered(new Test(), (entity : Test)=>entity.type == 'A').then((entities : Test[])=>this.typeAItems = entities);
+    this.tnk.getFiltered(new Test(), (entity : Test)=>entity.type == 'B').then((entities : Test[])=>this.typeBItems = entities);
+  }
+
+  addItem(){
+    console.log(this.typeAItems)
+    let item = new Test();
+    item.name = this.itemName;
+    item.type = this.itemType;
+
+    this.tnk.set(item);
+    this.getItems();
   }
 
 }
 
 export class Test extends StorageEntity<Test>{
+
+  name: string;
+  type: string;
+
+  constructor(test? : Test){
+    super(test);
+  }
+
   getCleanModel(entity?: Test): StorageEntity<Test> {
     return new Test(entity);
   }

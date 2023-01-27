@@ -1,3 +1,8 @@
+/**
+ * You can use it for your own purposes,
+ * but this is mainly used in StorageEntity to create database keys.
+ * @returns Returns a unique id. 
+ */
 function genUniqueId(): string {
     const dateStr = Date
       .now()
@@ -10,5 +15,5 @@ function genUniqueId(): string {
   
     return `${dateStr}-${randomStr}`;
 }
-  
+
 export default genUniqueId;
