@@ -26,7 +26,7 @@ export class DataFactory<T>{
 }
 
 /**
- * Base abstract class for anything that goes in the DB. 
+ * Base abstract class that should be extended by anything that goes in the DB. 
  * 
  * If you have children storage entity arrays in your class make sure
  * to also have a childrenKeys array to save the keys, because I don't save
@@ -58,10 +58,10 @@ export abstract class StorageEntity<T> {
 
     /**
      * Returns a clean model of the object for editing or other usages.
-     * It's necessary because we cannot do new T() so it has to be provided by the entity itself.
+     * It's necessary because we cannot perform `new T()` so it has to be provided by the entity itself.
      * @param entity If provided will deep clone this entity
      */
-    abstract getCleanModel(entity? : T) : StorageEntity<T>;
+    abstract getCleanModel(entity? : T) : T;
 
     /**
      * Should return the base class name.
@@ -82,7 +82,9 @@ export abstract class StorageEntity<T> {
      * Copies another entity if provided and marks this one as an instance.
      * This means it will be saved in a table named "instance"+className. 
      * This table needs to be added in the schema in the app.module.
-     * @param toInstantiate The entity that we want to instantiate
+     * This table needs to be added in the schema in the app.module. 
+     * If you added your table using `.addObjectStore('apples')` or `.addObjectStoreWithoutMock('apples')`, an instance table will be created automatically.
+     * @param toInstantiate  The entity that we want to clone before instantiating
      */
     instantiate(toInstantiate? : T) : StorageEntity<T> {
         if(toInstantiate){
@@ -97,7 +99,8 @@ export abstract class StorageEntity<T> {
      * Copies another entity if provided and marks this one as a mock object.
      * This means it will be saved in a table named "mock"+className. 
      * This table needs to be added in the schema in the app.module.
-     * @param toMock The entity that we want to mock
+     * If you added your table using `.addObjectStore('apples')` or `.addObjectStoreWithoutInstance('apples')`, an instance table will be created automatically.
+     * @param toMock The entity that we want to clone before mocking
      */
     mock(toMock? : T) : StorageEntity<T> {
         if(toMock){
@@ -113,7 +116,7 @@ export abstract class StorageEntity<T> {
      * If a property is a storage entity array, it will remove it to save space.
      * That is why you need to have a string array with the keys of children entities.
      * Also for any children storage entities that are not an array, it will perform the saveEntity
-     * recurrsively to prepare them for storage.
+     * recursively to prepare them for storage.
      * 
      * You shouldn't have to ever call this, but you can extend it if you want something changed.
      */
@@ -143,7 +146,7 @@ export abstract class StorageEntity<T> {
      * 
      * You shouldn't have to ever call this, but you can extend it if you want something changed. 
      * 
-     * If you have inner arrays of objects that are not StorageEntities and are not primal classes then extend
+     * If you have inner arrays of objects that are not StorageEntities and are not primitive classes then extend
      * this and make sure to Object assign each item with the appropriate class.
      * @param entity The entity to clone.
      */
@@ -195,12 +198,13 @@ export class EmptyEntity extends StorageEntity<EmptyEntity> {
 }
 
 /**
- * Whenever you load a list from the database it needs to be passed here to be cleaned up and made ready for usage.
- * I am trying to figure out a way so that you will never have to call this. So far you need to. I am sorry.
- * @param object The type of entities in this list. Necessary for clean up because we cannot do new T()
+ * Whenever you load a list from the database it needs to be passed here to be cleaned up and made ready for usage. 
+ * This is handled in tnkStorage so you shouldn't need to use it. 
+ * It is publicly exported, in case you extend the storage service and want to use it.
+ * @param object The type of entities in this list. Necessary for clean up because we cannot perform `new T()`
  * @param keyRange The list that needs cleaning. The changes are not applied to this list but returned.
  */
-export function fixList<T>(object: StorageEntity<T>, list: T[]): T[] {
+export function fixList<T extends StorageEntity<T>>(object: T, list: T[]): T[] {
     return list.map(o => {
         return object.getCleanModel().deepClone(o)
     });

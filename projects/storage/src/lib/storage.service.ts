@@ -144,7 +144,7 @@ export class TnkStorage extends NgxIndexedDBService {
             console.log("data:", data)
             if(!data)
               return resolve(data);
-            return resolve(data.entity);
+            return resolve(instance.getCleanModel(data.entity));
           }
         });
       }catch(e){

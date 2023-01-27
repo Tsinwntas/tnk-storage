@@ -52,7 +52,7 @@ export class Test extends StorageEntity<Test>{
     super(test);
   }
 
-  getCleanModel(entity?: Test): StorageEntity<Test> {
+  getCleanModel(entity?: Test): Test {
     return new Test(entity);
   }
   getTableNameForClass(): string {
