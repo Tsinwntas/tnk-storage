@@ -55,14 +55,14 @@ I cover several common methods used to work with the IndexedDB and NgxIndexedDB.
 You will notice that I keep passing an instance of the item I  want to handle, that is because even if I pass the type as a generic parameter (f.e. get\<T>) I cannot then instantiate it `new T()` to get the table name and to fix the item retrieved from the DB.
 In cases that I don't care about instantiating or fixing an item (f.e. deleteKeys), I still pass the entity to get the table name to avoid magic strings.
 
-**getUser(): Promise\<User>;**
+**getUser() : Promise\<User>;**
 Gets app user.
 If the user does not exist, it will create a new one and return that one.
 - @returns Promise of a user.
 ```
 this.tnk.getUser().then(user=>this.user_ = user);
 ```
-**updateUser(user: User): void;**
+**updateUser(user: User) : void;**
 Update the user data.
 - @param  user The new user data
 ```
@@ -120,7 +120,7 @@ private bittenApples = await this.tnk.getFiltered<Apple>(new Apple(),
 ```
 *If for some reason you only want the database keys  of those apples, just add in the parameters a `(.., ..., true)` and it will return an array of the keys only.*
 
-**getAllFromTable<T  extends  StorageEntity\<T>>(instance: T, returnKeys?: boolean): Promise<any[]>;**
+**getAllFromTable<T  extends  StorageEntity\<T>>(instance : T, returnKeys? : boolean) : Promise<any[]>;**
 Gets all entities in the given entities table.
 
 * @param  instance The type of entities to return
@@ -130,7 +130,7 @@ Gets all entities in the given entities table.
 private apples = await this.tnk.getAllFromTable<Apple>(new Apple());
 ```
 
-**set(entity: StorageEntity\<any>): Promise\<any>;**
+**set(entity : StorageEntity\<any>) : Promise\<any>;**
 Updates or inserts the given entity in the DB.
 
 * @param  entity Entity to update or create
@@ -145,7 +145,7 @@ apple.takeBite();
 this.tnk.set(apple);
 ```
 
-**deleteEntity(entity: StorageEntity\<any>): void;**
+**deleteEntity(entity : StorageEntity\<any>) : void;**
 Deletes entity from DB.
 
 * @param  entity Entity to delete.
@@ -155,7 +155,7 @@ onRemoveApple(apple : Apple){
 }
 ```
 
-**deleteKeys(instance : StorageEntity\<any>, keys: string[]): Promise<any>;**
+**deleteKeys(instance : StorageEntity\<any>, keys : string[]) : Promise<any>;**
 Deletes all given keys from table.
 
 * @param  instance The type of entities to delete
@@ -174,7 +174,7 @@ this.tnk.getFiltered<Apple>(new Apple(), (apple)=>apple.isRotten(), true)
 
 ### Unnecessary - Please Avoid for now
 
-**isOwner(owner?: string): Promise\<boolean>;**
+**isOwner(owner? : string) : Promise\<boolean>;**
 No true implementation as of now, this is in design for syncing between devices. That will be in a future release.
 
 - @param  owner Owner database key
@@ -182,14 +182,14 @@ No true implementation as of now, this is in design for syncing between devices.
 
 
 
-**create(entity: StorageEntity\<any>): void;**
+**create(entity : StorageEntity\<any>) : void;**
 
 Inserts the given entity in the database.
 No need to call this one. Seems like 'set' works for inserting as well.
 
 - @param  entity To create
 
-**createBatch(table: string, entities: StorageEntity<any>[]): Observable\<any>;**
+**createBatch(table : string, entities : StorageEntity<any>[]) : Observable\<any>;**
 
 Supposedly inserts batch of records. Limit the number of data to under 100 if possible.
 Create Batch causes problems, avoid if possible, or use for small batches. Remember to subscribe to it or it will not do its job.
@@ -212,7 +212,7 @@ If you have objects that are of any other type as children then make sure to ini
 ```
 export  class  Apple extends StorageEntity<Apple> {
 
-	constructor(toClone?: Apple);
+	constructor(toClone? : Apple);
 }
 ```
 When creating a new object of a type, you can pass an already existing object to be cloned. This is used in the storage.get function, so you shouldn't need to ever pass an entity when creating a new object.
@@ -220,7 +220,7 @@ When creating a new object of a type, you can pass an already existing object to
 
 ### API
 
-**abstract  getCleanModel(entity?: T) : T;**
+**abstract  getCleanModel(entity? :  T) : T;**
 Returns a clean model of the object for editing or other usages.
 It's necessary because I cannot perform `new T()` so it has to be provided by the entity itself.
 
@@ -265,19 +265,19 @@ addInstanceOfAppleToPicnic(apple : Apple){
 ```
 *I do this so that when we are looking for an instance of an object, then we don't look through the whole object DB. Also I instantiate so that we can clone and edit the instance without effecting the original.*
 
-**mock(toMock?: T): StorageEntity\<T>;**
+**mock(toMock? : T) : StorageEntity\<T>;**
 Copies another entity if provided and marks this one as a mock object. This means it will be saved in a table named "mock"+className. This table needs to be added in the schema in the app.module. If you added your table using `.addObjectStore('apples')` or `.addObjectStoreWithoutInstance('apples')`, a mock table will be created automatically.
 
 * @param  toMock The entity that we want to mock
 ```
-sendMockOfApple(device: Device, apple : Apple){
+sendMockOfApple(device : Device, apple : Apple){
 	//no sync functionality yet.
 	sync(device, apple.mock());
 }
 ```
 *This is to be used when I implement the sync functionality. For now, there is no real reason to mock an object.*
 
-**saveEntity(): StorageEntity\<T>;**
+**saveEntity() : StorageEntity\<T>;**
 Is called when the entity being set in the database.  Before saving, it will iterate over the properties and update their values accordingly.
 * If a property is a storage entity array, it will remove it to save space. That is why you need to have a string array with the keys of children entities.
 * Any children storage entities that are not an array, it will perform the saveEntity recursively to prepare them for storage.
@@ -322,7 +322,7 @@ Whenever you load a list from the database it needs to be passed here to be clea
 This whole module is built around a simple table structure of `{ databasekey : string, entity : StorageEntity }`. So before saving the service will handle this.
 
 ### API
-**export   function  toDB(entity: StorageEntity\<any>) : DatabaseRecord;**
+**export   function  toDB(entity : StorageEntity\<any>) : DatabaseRecord;**
 You should never have to call this yourself. It is called during storage to set the entities in the format the DB expects.
 
 * @param  entity The entity that will be saved.
@@ -337,7 +337,7 @@ If there is ever a functionality for dynamic creation of objectstores, then this
 
 * @param  tableName The name of the objectStore to create.
 
-**TnkDBConfig.constructor(name: string, version: number, migrationFactory?: () => { [key: number]: (db: IDBDatabase, transaction: IDBTransaction) =>  void;});**
+**TnkDBConfig.constructor(name : string, version : number, migrationFactory? : () => { [key : number]: (db : IDBDatabase, transaction : IDBTransaction) =>  void;});**
 Simplified version of creating a DBConfig that works with this storage implementation. Adds by default a 'user' table to keep the user of the device and the preferences.
 
 * @param  name Name of the object store
@@ -345,32 +345,32 @@ Simplified version of creating a DBConfig that works with this storage implement
 * @param  migrationFactory (Optional) Ahead of time compiles requires an exported function for factories
 *I am not sure on the proper use of the migrationFactory, I didn't have any need for it yet.*
 
-**addObjectStore(tableName: string): TnkDBConfig;**
+**addObjectStore(tableName : string) : TnkDBConfig;**
 Creates an object store for the name provided plus both the instance and mock table for this store.
 
 * @param  tableName The name of the object store
 * @returns Self
 
-**addObjectStoreWithoutInstance(tableName: string): TnkDBConfig;**
+**addObjectStoreWithoutInstance(tableName : string) : TnkDBConfig;**
 Creates an object store for the name provided plus mock tables for this store only.
 
 * @param  tableName The name of the object store
 * @returns Self
 
-**addObjectStoreWithoutMock(tableName: string): TnkDBConfig;**
+**addObjectStoreWithoutMock(tableName : string) : TnkDBConfig;**
 Creates an object store for the name provided plus instance table for this store only.
 
 * @param  tableName The name of the object store
 * @returns Self
 
-**addObjectStoreSimple(tableName: string): TnkDBConfig;**
+**addObjectStoreSimple(tableName : string) : TnkDBConfig;**
 Creates an object store for the name provided without the instance and mock table.
 
 * @param  tableName The name of the object store
 * @returns Self
 
 ```
-const  dbConfig: DBConfig = new TnkDBConfig("test", 5)
+const  dbConfig : DBConfig = new TnkDBConfig("test", 5)
 	.addObjectStore('apples');
 	.addObjectStoreSimple('picnics');
 	.addObjectStoreWithoutInstance('forks');
