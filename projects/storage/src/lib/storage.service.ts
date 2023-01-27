@@ -3,7 +3,7 @@ import { User } from './user';
 import { StorageEntity } from './data-factory';
 import { toDB } from './database-record'
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
-import { NgxIndexedDBService, ObjectStoreMeta, CONFIG_TOKEN, DBConfig } from 'ngx-indexed-db';
+import { NgxIndexedDBService, CONFIG_TOKEN, DBConfig } from 'ngx-indexed-db';
 import { Observable } from 'rxjs';
 
 
@@ -20,8 +20,9 @@ export class TnkStorage extends NgxIndexedDBService {
   }
 
   /**
-   * Get app user, this functionality is optional. If you want to use the user functionality you need to add the 'user' table in the schema.
-   * @returns Promise of a user if the table 'user' exists. If the user does not exist, it will create a new one and return that one.
+   * Gets app user.
+   * If the user does not exist, it will create a new one and return that one.
+   * @returns Promise of a user.
    */
   async getUser(): Promise<User> {
     return new Promise<User>((resolve, reject)=>{
@@ -50,7 +51,7 @@ export class TnkStorage extends NgxIndexedDBService {
 
   /**
    * No true implementation as of now, this is in design for syncing between devices. That will be in a future release.
-   * @param owner 
+   * @param owner Owner database key
    * @returns Whether the user on this device is the owner of this object.
    */
   async isOwner(owner? : string) : Promise<boolean>{
@@ -87,15 +88,15 @@ export class TnkStorage extends NgxIndexedDBService {
    * @param entity Entity to reload
    * @returns Promise of saved entity.
    */
-  async getByEntity<T>(entity : StorageEntity<any>) : Promise<T>{
-    return await this.get<T>(entity.getTableName(), entity.databaseKey);
+  async getByEntity<T extends StorageEntity<T>>(entity : T) : Promise<T>{
+    return await this.get<T>(entity, entity.databaseKey);
   }
 
   /**
    * Given a filter condition it will filter the table for entities.
    * @param instance Instance of type to be returned. Is necessary to fix the list retrieved from the DB.
    * @param condition Function with storage entity as parameter and boolean return. Will be used for filtering
-   * @param returnKeys Whether you to return the keys of the entities returned instead of the entities themselves
+   * @param returnKeys Whether you are to return the keys of the entities returned instead of the entities themselves
    * @returns Either array of filtered entities or their keys.
    */
   async getFiltered<T extends StorageEntity<T>>(instance : T, condition: (value:StorageEntity<any>)=>boolean, returnKeys? : boolean): Promise<any[]> {
@@ -130,15 +131,15 @@ export class TnkStorage extends NgxIndexedDBService {
   }
 
   /**
-   * Retrieves an entity from the table provided that matches the key given.
-   * @param table Table name
+   * Retrieves an entity from the table provided, that matches the key given.
+   * @param instance Type of instance to get
    * @param databaseKey Key of entity
    * @returns Promise of the retrieved entity.
    */
-  get<T>(table: string, databaseKey: string): PromiseLike<T> {
+  get<T extends StorageEntity<T>>(instance : T, databaseKey: string): Promise<T> {
     return new Promise<T>((resolve, reject) => {
       try{
-        this.getByKey(table, databaseKey).subscribe({
+        this.getByKey(instance.getTableName(), databaseKey).subscribe({
           next:(data : any)=>{
             console.log("data:", data)
             if(!data)
@@ -176,13 +177,13 @@ export class TnkStorage extends NgxIndexedDBService {
 
   /**
    * Deletes all given keys from table.
-   * @param table Table name
+   * @param instance The type of entities to delete
    * @param keys Keys to delete
    * @returns Promise if you want to handle the finish of deletion.
    */
-  async deleteKeys(table : string, keys : string[]) : Promise<any>{
+  async deleteKeys(instance : StorageEntity<any>, keys : string[]) : Promise<any>{
     return new Promise<any>((resolve, reject)=>{
-        this.bulkDelete(table, keys).subscribe((result : any) => {
+        this.bulkDelete(instance.getTableName(), keys).subscribe((result : any) => {
           console.log('result: ', result);
           return resolve(result);
         });

@@ -1,4 +1,4 @@
-import { TnkDBConfig } from './../../projects/storage/src/lib/database-record';
+import { TnkDBConfig } from 'projects/storage/src/public-api';
 import { DBConfig } from 'ngx-indexed-db';
 import { TnkStorage, TnkStorageModule } from 'projects/storage/src/public-api';
 import { BrowserModule } from '@angular/platform-browser';
@@ -20,7 +20,6 @@ const dbConfig: DBConfig  = new TnkDBConfig("test", 5).addObjectStoreSimple('tes
     AppRoutingModule,
     TnkStorageModule.forRoot(dbConfig),
   ],
-  providers: [TnkStorage],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
