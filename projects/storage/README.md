@@ -170,8 +170,6 @@ this.tnk.getFiltered<Apple>(new Apple(), (apple)=>apple.isRotten(), true)
 	});
 ```
 
-
-
 ### Unnecessary - Please Avoid for now
 
 **isOwner(owner? : string) : Promise\<boolean>;**
@@ -201,6 +199,9 @@ In my own projects I had to stop using it and add each record individually. It w
 - @param  entities Entities to insert into DB.
 
 - @returns Observalbe to subscribe to. If you do not subscribe it will not perfom the actions.
+
+### Extras
+This service extends `ngx-indexed-db` so it also exports all of their API. You can check out their API [here](https://www.npmjs.com/package/ngx-indexed-db).
 
 ## StorageEntity abstract class
 Base abstract class that should be extended by anything that goes in the DB.
