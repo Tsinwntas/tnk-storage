@@ -1,6 +1,5 @@
-import { fixList } from 'projects/storage/src/public-api';
 import { User } from './user';
-import { StorageEntity } from './data-factory';
+import { StorageEntity, fixList } from './data-factory';
 import { toDB } from './database-record'
 import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 import { NgxIndexedDBService, CONFIG_TOKEN, DBConfig } from 'ngx-indexed-db';

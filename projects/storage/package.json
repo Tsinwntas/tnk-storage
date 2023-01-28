@@ -1,15 +1,10 @@
 {
   "name": "@tnk-modules/storage",
-  "version": "1.0.1",
-  "dependencies": {
-    
-  },
-  "peerDependencies": {
-    "ngx-indexed-db": "^12.0.0"
-  },
-  "devDependencies": {
-    "typescript": "^3.4.5"
-  },
+  "author": "Nicolas Tsinik Tsinontas",
+  "description": "Angular simplification if the IndexedDB functionality.",
+  "version": "1.0.8",
+  "license": "TnkDevelopment",
+  "private": false,
   "keywords": [
     "indexed",
     "db",
@@ -21,5 +16,17 @@
     "storage",
     "schema",
     "index"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Tsinwntas/tnk-storage"
+  },
+  "peerDependencies": {
+    "@angular/common": ">=10.0.6",
+    "@angular/core": ">=10.0.6",
+    "ngx-indexed-db": ">=12.0.0"
+  },
+  "dependencies": {
+    "tslib": ">=2.3.0"
+  }
 }

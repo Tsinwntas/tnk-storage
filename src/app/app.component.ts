@@ -1,5 +1,5 @@
-import { fixList, TnkStorage } from 'projects/storage/src/public-api';
-import { Component, inject, OnInit } from '@angular/core';
+import { TnkStorage } from 'projects/storage/src/public-api';
+import { Component, OnInit } from '@angular/core';
 import { StorageEntity } from 'projects/storage/src/public-api';
 
 
